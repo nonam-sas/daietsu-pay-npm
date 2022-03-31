@@ -1,0 +1,11 @@
+{
+    "name": "daietsu-pay",
+    "type": "module",
+    "version": "1.0.0",
+    "main": "daietsu-pay.js",
+    "author": "Nonam SAS <contact@non.am>",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nonam-sas/daietsu-pay-npm.git"
+    }
+}
