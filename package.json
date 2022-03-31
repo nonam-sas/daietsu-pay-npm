@@ -10,5 +10,8 @@
     },
     "dependencies": {
         "node-fetch": "^3.2.3"
+    },
+    "peerDependencies": {
+        "react-native-fast-crypto": "^2.2.0"
     }
 }
