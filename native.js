@@ -37,7 +37,7 @@ const _CARD_DEFAULT_FORMAT = /(\d{1,4})/g;
 const DaietsuPay = {
     _DAIETSU_SERVER_ENDPOINT: "https://api.daietsu.app",
     _SANBDOX_DAIETSU_SERVER_ENDPOINT: "https://sandbox-api.daietsu.app",
-    _ALG: { name: "RSA-OAEP", hash: { name: "SHA-256" }, label: new TextEncoder().encode("daietsu-pay") },
+    _ALG: { name: "RSA-OAEP", hash: { name: "SHA-256" } },
     _CARD_DEFAULT_FORMAT,
     _CARDS_REGISTRY: [
         {
