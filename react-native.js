@@ -171,9 +171,9 @@ const DaietsuPay = {
         });
     },
     async _enc(data, key) {
-        return key.encrypt(forge.util.encodeUtf8(data), 'RSA-OAEP', {
+        return forge.util.encode64(key.encrypt(forge.util.encodeUtf8(data), 'RSA-OAEP', {
             md: forge.md.sha256.create()
-        });
+        }));
     },
     async get_public_keys() {
         return new Promise(async (resolve, reject) => {
