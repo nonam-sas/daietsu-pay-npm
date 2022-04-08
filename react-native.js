@@ -145,7 +145,7 @@ const DaietsuPay = {
                 const keys = (await this._$get(this._DAIETSU_SERVER_ENDPOINT + "/v1/paycli/public_keys")).keys;
                 let imported_keys = {};
                 for (let i in keys)
-                    imported_keys[i] = "-----BEGIN PUBLIC KEY-----\n" + forge.pki.publicKeyFromPem(keys[i]) + "\n-----END PUBLIC KEY-----";
+                    imported_keys[i] = forge.pki.publicKeyFromPem("-----BEGIN PUBLIC KEY-----\n" + keys[i] + "\n-----END PUBLIC KEY-----");
                 return resolve(imported_keys);
             } catch (e) {
                 return reject();
