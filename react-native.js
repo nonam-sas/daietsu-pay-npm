@@ -1,4 +1,5 @@
-import crypto from "react-native-fast-crypto";
+const forge = require('node-forge');
+forge.options.usePureJavaScript = true;
 // Constants
 const bufferToBase64 = (buffer) => {
     return buffer.toString("base64");
@@ -22,7 +23,6 @@ const _CARD_DEFAULT_FORMAT = /(\d{1,4})/g;
 const DaietsuPay = {
     _DAIETSU_SERVER_ENDPOINT: "https://api.daietsu.app",
     _SANBDOX_DAIETSU_SERVER_ENDPOINT: "https://sandbox-api.daietsu.app",
-    _ALG: { padding: crypto.constants.RSA_PKCS1_OAEP_PADDING, oaepHash: "sha256", oaepLabel: "daietsu-pay" },
     _CARD_DEFAULT_FORMAT,
     _CARDS_REGISTRY: [
         {
@@ -135,7 +135,9 @@ const DaietsuPay = {
         });
     },
     async _enc(data, key) {
-        return crypto.publicEncrypt(Object.assign({key}, this._ALG), Buffer.from(data)).toString("base64");
+        return key.encrypt(forge.util.encodeUtf8(data), 'RSA-OAEP', {
+            md: forge.md.sha256.create()
+        });
     },
     async get_public_keys() {
         return new Promise(async (resolve, reject) => {
@@ -143,7 +145,7 @@ const DaietsuPay = {
                 const keys = (await this._$get(this._DAIETSU_SERVER_ENDPOINT + "/v1/paycli/public_keys")).keys;
                 let imported_keys = {};
                 for (let i in keys)
-                    imported_keys[i] = "-----BEGIN PUBLIC KEY-----\n" + keys[i] + "\n-----END PUBLIC KEY-----";
+                    imported_keys[i] = "-----BEGIN PUBLIC KEY-----\n" + forge.pki.publicKeyFromPem(keys[i]) + "\n-----END PUBLIC KEY-----";
                 return resolve(imported_keys);
             } catch (e) {
                 return reject();
